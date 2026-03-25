@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Bali Wedding & Travel Master v17</title>
+    <title>Bali Wedding & Travel Master v18</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -194,12 +194,13 @@
                 ] 
             },
             { 
-                day: 6, date: "4/6", title: "最後採買與返程", 
-                transport: "包車送機",
+                day: 6, date: "4/6", title: "最後按摩與返程", 
+                transport: "全日包車 (含送機)",
                 events: [
                     { time: "上午", desc: "庫塔 Mall 補貨、買伴手禮", type: "transport" },
-                    { time: "下午", desc: "最後按摩、享受南洋時光", type: "important" },
-                    { time: "17:00", desc: "前往機場報到 (TR287)", type: "important" },
+                    { time: "13:30", desc: "飯店接送到 Lluvia Spa 進行按摩 (2hr)", location: "Lluvia Spa Bali", important: true },
+                    { time: "16:00", desc: "按摩結束，直接出發接送到機場", type: "transport" },
+                    { time: "17:30", desc: "抵達機場辦理報到 (TR287)", type: "important" },
                     { time: "19:40", desc: "TR287 前往新加坡樟宜機場", type: "flight" },
                     { time: "4/7 01:00", desc: "轉機 TR876 返回桃園機場", type: "flight" }
                 ] 
@@ -220,18 +221,19 @@
         const wikiData = [
             { day: 1, name: "烏布皇宮", cat: "景點", desc: "烏布市中心地標，具有精緻的石刻藝術與傳統峇里島建築。" },
             { day: 2, name: "特朗哥河泛舟", cat: "活動", desc: "峇里島最長且刺激的泛舟路段，沿途可見瀑布與壯麗峽谷。" },
-            { day: 5, name: "Waterbom Bali", cat: "活動", desc: "亞洲第一的水上樂園，設施豐富且環境優美，位於庫塔市中心。" }
+            { day: 5, name: "Waterbom Bali", cat: "活動", desc: "亞洲第一的水上樂園，設施豐富且環境優美，位於庫塔市中心。" },
+            { day: 6, name: "Lluvia Spa", cat: "按摩", desc: "庫塔區知名 Spa 中心，提供多種放鬆療程，空間舒適且評價優良。" }
         ];
 
         // --- 狀態管理 ---
-        let state = JSON.parse(localStorage.getItem('bali_v17_pro_state')) || {
+        let state = JSON.parse(localStorage.getItem('bali_v18_pro_state')) || {
             rate: 0.0021,
             expenses: [],
             dailyMemories: { 1:{text:"", img:""}, 2:{text:"", img:""}, 3:{text:"", img:""}, 4:{text:"", img:""}, 5:{text:"", img:""}, 6:{text:"", img:""} },
             checkedItems: []
         };
 
-        function save() { localStorage.setItem('bali_v17_pro_state', JSON.stringify(state)); }
+        function save() { localStorage.setItem('bali_v18_pro_state', JSON.stringify(state)); }
 
         // --- 核心邏輯 ---
         function headerCalc(val) {
@@ -286,15 +288,15 @@
                                 <div class="relative">
                                     <div class="time-dot"></div>
                                     <span class="text-[9px] font-black text-stone-300 uppercase tracking-widest">${e.time || '--:--'}</span>
-                                    <div class="${e.important ? 'bg-orange-50 p-3 rounded-xl border border-orange-100' : ''}">
+                                    <div class="${e.important ? 'bg-orange-50 p-3 rounded-xl border border-orange-100 shadow-sm' : ''}">
                                         <p class="text-sm font-bold text-stone-800">${e.desc}</p>
-                                        ${e.location ? `<button onclick="openMap('${e.location}')" class="mt-2 text-[10px] text-blue-500 font-bold bg-white px-2 py-1 rounded shadow-sm"><i class="fa-solid fa-location-dot mr-1"></i> Maps</button>` : ''}
+                                        ${e.location ? `<button onclick="openMap('${e.location}')" class="mt-2 text-[10px] text-blue-500 font-bold bg-white px-2 py-1 rounded shadow-sm"><i class="fa-solid fa-location-dot mr-1"></i> 地圖導航</button>` : ''}
                                     </div>
                                 </div>
                             `).join('')}
                         </div>
 
-                        <!-- 飯店卡 -->
+                        <!-- 飯店資訊 -->
                         ${d.day === 1 ? `
                             <div class="mt-6 card p-4 bg-stone-50 border-stone-200">
                                 <h4 class="text-[10px] font-bold text-stone-400 uppercase mb-2">入住飯店</h4>
@@ -319,7 +321,7 @@
                             { cat: '重要證件與紙本', items: ['護照正本', '電子機票', '訂房資訊紙本', '美金/印尼盾', '海關申報 QR'] },
                             { cat: '數位與通訊', items: ['網卡 (SIM/eSIM)', '行動電源', '手機掛繩 (防丟必備)', '萬國插頭'] },
                             { cat: '戲水與婚禮', items: ['禮服/西裝/ NuBra', '太陽眼鏡', '防水袋 (Waterbom 用)', '泳裝與換洗衣物'] },
-                            { cat: '個人護理', items: ['防曬乳', '防蚊液', '常備藥品', '小包面紙'] }
+                            { cat: '個人護理', items: ['防曬乳', '防蚊液', '常備藥品', '按摩預約單'] }
                         ].map(section => `
                             <div class="card p-5">
                                 <h4 class="text-[10px] font-black text-[#C5A059] uppercase mb-3 tracking-widest">${section.cat}</h4>
@@ -362,21 +364,21 @@
                 `;
             } else if (tabId === 'memory') {
                 container.innerHTML = `
-                    <h2 class="serif text-2xl font-bold italic text-[#2D433D] mb-6">Daily Snapshots</h2>
+                    <h2 class="serif text-2xl font-bold italic text-[#2D433D] mb-6">Visual Memories</h2>
                     ${itinerary.map(d => `
                         <div class="card p-5">
                             <div class="flex justify-between items-center mb-4">
                                 <span class="text-xs font-bold text-[#C5A059]">DAY ${d.day} | ${d.date}</span>
                                 <label class="bg-stone-100 px-3 py-1 rounded-full text-[10px] font-bold text-stone-500 cursor-pointer">上傳照片 <input type="file" onchange="handlePhoto(${d.day}, this)"></label>
                             </div>
-                            <textarea oninput="state.dailyMemories[${d.day}].text=this.value; save()" class="w-full h-20 bg-stone-50 rounded-xl p-3 text-sm outline-none mb-3" placeholder="記錄今天的趣事...">${state.dailyMemories[d.day].text}</textarea>
+                            <textarea oninput="state.dailyMemories[${d.day}].text=this.value; save()" class="w-full h-20 bg-stone-50 rounded-xl p-3 text-sm outline-none mb-3" placeholder="記錄今天的感動...">${state.dailyMemories[d.day].text}</textarea>
                             ${state.dailyMemories[d.day].img ? `<div class="memo-img-container"><img src="${state.dailyMemories[d.day].img}"></div>` : ''}
                         </div>
                     `).join('')}
                 `;
             } else if (tabId === 'more') {
                 container.innerHTML = `
-                    <h2 class="serif text-2xl font-bold italic text-[#2D433D] mb-6">Spot Wiki</h2>
+                    <h2 class="serif text-2xl font-bold italic text-[#2D433D] mb-6">Wiki Guide</h2>
                     <div class="space-y-8">
                         ${wikiData.map(item => `
                             <div class="card p-5">
@@ -384,8 +386,8 @@
                                     <h3 class="font-bold text-stone-800 text-sm">${item.name}</h3>
                                     <span class="text-[9px] bg-stone-100 text-[#C5A059] px-2 py-0.5 rounded font-bold uppercase">DAY ${item.day}</span>
                                 </div>
-                                <p class="text-[11px] text-stone-500 leading-relaxed mb-4">${item.desc}</p>
-                                <button onclick="openMap('${item.name}')" class="w-full border border-stone-100 text-stone-600 py-2 rounded-xl text-[10px] font-black">查看地圖</button>
+                                <p class="text-[11px] text-stone-500 leading-relaxed mb-4 font-medium">${item.desc}</p>
+                                <button onclick="openMap('${item.name}')" class="w-full border border-stone-100 text-stone-600 py-2 rounded-xl text-[10px] font-black">在地圖中查看位置</button>
                             </div>
                         `).join('')}
                     </div>
